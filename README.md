@@ -18,8 +18,9 @@ PARAKH is an intelligent, production-grade inspection system designed to automat
 
 * **Frontend**: React, Vite, Node.js (with custom Flexbox UI & interactive telemetry). 
 * **Backend**: FastAPI, Python, Pydantic (strictly typed schemas).
-* **AI & Vision**: PaddleOCR, Google GenAI SDK (Gemini), LangChain Text Splitters. 
+* **AI & Vision**: PaddleOCR, Gemini API, RAG Pipeline
 * **Vector Database**: ChromaDB (Local persistence).
+* 
 
 ---
 
