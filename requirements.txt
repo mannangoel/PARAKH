@@ -1,0 +1,11 @@
+sentence-transformers
+chromadb
+langchain-text-splitters
+google-genai
+python-dotenv
+pydantic
+langchain
+langgraph
+langchain-community
+streamlit
+google-genai

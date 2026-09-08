@@ -1,0 +1,28 @@
+[project]
+name = "sih"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Mannan Goel", email = "mannangoel657@gamil.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "chromadb>=1.5.9",
+    "google-genai>=2.22.0",
+    "langchain>=1.4.0",
+    "langchain-community>=0.4.2",
+    "langchain-text-splitters>=1.1.2",
+    "langgraph>=1.2.11",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+    "sentence-transformers>=6.0.1",
+    "streamlit>=1.63.0",
+]
+
+[project.scripts]
+sih = "sih:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
