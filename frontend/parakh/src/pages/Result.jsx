@@ -34,7 +34,7 @@ function Result() {
     "Ensure 'Batch / Lot Number' is clearly printed on the principal display panel.",
     "Verify font height meets the minimum 1.5mm standard as per Rule 7."
   ]);
-  const [latency, setLatency] = useState("PaddleOCR (2.1s) → ChromaDB (0.1s) → Gemini (1.8s)");
+  const [latency, setLatency] = useState("System Processing (3.1s)");
 
   useEffect(() => {
     const reportRaw = sessionStorage.getItem("parakhComplianceReport");
@@ -58,6 +58,34 @@ function Result() {
         if (report.raw_ocr_data) setRawOcrData(report.raw_ocr_data);
         if (report.remediation_plan) setRemediationSteps(report.remediation_plan);
         if (report.latency_metrics) setLatency(report.latency_metrics);
+
+        // --- Save to History ---
+        let passed = 0;
+        let total = 0;
+        if (report.attributes) {
+          total = report.attributes.length;
+          passed = report.attributes.filter(a => a.pass_status ?? a.pass).length;
+        }
+        
+        const historyItem = {
+          id: "PRK-" + Date.now().toString().slice(-6),
+          date: new Date().toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' }),
+          productName: sessionStorage.getItem("parakhProductName") || "Packaged Commodity",
+          score: Math.round((passed / total) * 100) || 0,
+          isCompliant: passed === total && total > 0,
+          image: sessionStorage.getItem("parakhImage"),
+          reportData: report
+        };
+        
+        const historyRaw = localStorage.getItem("parakhHistory");
+        let historyArr = historyRaw ? JSON.parse(historyRaw) : [];
+        
+        const isDuplicate = historyArr.length > 0 && JSON.stringify(historyArr[historyArr.length - 1].reportData) === JSON.stringify(report);
+        
+        if (!isDuplicate) {
+          historyArr.push(historyItem);
+          localStorage.setItem("parakhHistory", JSON.stringify(historyArr));
+        }
 
       } catch (e) {
         console.error("Failed to parse compliance report in Result page", e);
@@ -241,10 +269,10 @@ function Result() {
             onClick={() => setShowRawOCR(!showRawOCR)}
           >
             <div>
-              <h2 style={{ fontWeight: "700" }}>Raw Vision Telemetry</h2>
-              <p>PaddleOCR Extraction & Confidence Scores (Click to Expand)</p>
+              <h2 style={{ fontWeight: "700" }}>Raw Telemetry</h2>
+              <p>System Extraction & Confidence Scores (Click to Expand)</p>
             </div>
-            <strong style={{ fontSize: "1.5rem", color: "#4a5568", background: "#edf2f7", padding: "4px 12px", borderRadius: "8px" }}>
+            <strong style={{ fontSize: "1.5rem", color: "#000000", background: "#f0f0f0", padding: "4px 12px", borderRadius: "0" }}>
               {showRawOCR ? "−" : "+"}
             </strong>
           </div>
@@ -290,9 +318,9 @@ function Result() {
         {/* ACTIONS */}
         <div className="result-actions" style={{ marginTop: "32px" }}>
           <button
-            className="download-button"
+            className="download-button hide-on-print"
             style={{ fontWeight: "700", fontSize: "1rem" }}
-            onClick={() => alert("Report generation triggered.")}
+            onClick={() => window.print()}
           >
             <Download size={18} />
             Download Report
@@ -306,7 +334,7 @@ function Result() {
 
         {/* PIPELINE LATENCY FOOTER */}
         <div style={{ textAlign: "center", marginTop: "40px", padding: "16px", color: "#718096", fontSize: "0.85rem", borderTop: "1px solid #e2e8f0" }}>
-          <span style={{ fontFamily: "monospace" }}>⏱ System Latency: {latency}</span>
+          <span style={{ fontFamily: "monospace" }}>System Latency: {latency}</span>
         </div>
       </main>
 
@@ -325,10 +353,8 @@ function Summary({ title, value, type }) {
       alignItems: "center", 
       justifyContent: "center",
       padding: "20px 16px",
-      background: "#fff",
-      borderRadius: "8px",
-      border: "1px solid #e2e8f0",
-      boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+      background: "#ffffff",
+      border: "1px solid #000000",
       textAlign: "center"
     }}>
       <span style={{ fontWeight: "600", color: "#718096", fontSize: "0.95rem", marginBottom: "8px" }}>

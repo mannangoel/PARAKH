@@ -55,14 +55,24 @@ Task:
 2. Provide a clear remediation_plan list containing actionable steps to fix any non-compliant or missing elements.
 """
 
-        response = self.ai_client.models.generate_content(
-            model=GEMINI_MODEL_NAME,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.0,
-                response_mime_type="application/json",
-                response_schema=ComplianceReport,
-            )
-        )
-        
-        return json.loads(response.text)
+        # Robust retry logic for 503 and 429 Overload errors
+        retries = 5
+        for attempt in range(retries):
+            try:
+                response = self.ai_client.models.generate_content(
+                    model=GEMINI_MODEL_NAME,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.0,
+                        response_mime_type="application/json",
+                        response_schema=ComplianceReport,
+                    )
+                )
+                return json.loads(response.text)
+            except Exception as e:
+                error_msg = str(e)
+                if ("503" in error_msg or "429" in error_msg or "high demand" in error_msg) and attempt < retries - 1:
+                    import time
+                    time.sleep(2 ** attempt) # Exponential backoff: 1s, 2s, 4s, 8s
+                    continue
+                raise e

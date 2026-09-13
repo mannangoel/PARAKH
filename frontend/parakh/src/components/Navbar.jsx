@@ -36,6 +36,12 @@ function Navbar() {
         >
           Inspection
         </Link>
+        <Link 
+          to="/investigations" 
+          style={{ textDecoration: "none", color: "#4a5568", fontWeight: "600", fontSize: "1.05rem", transition: "color 0.2s" }}
+        >
+          History
+        </Link>
       </div>
     </nav>
   );

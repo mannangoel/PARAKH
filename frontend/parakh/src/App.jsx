@@ -41,6 +41,7 @@ import Home from "./pages/Home";
 import Inspection from "./pages/Inspection";
 import Analysis from "./pages/Analysis";
 import Result from "./pages/Result";
+import Investigations from "./pages/Investigations";
 
 import "./App.css";
 
@@ -67,6 +68,11 @@ function App() {
           <Route
             path="/result"
             element={<Result />}
+          />
+
+          <Route
+            path="/investigations"
+            element={<Investigations />}
           />
 
         </Routes>

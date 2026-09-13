@@ -42,8 +42,8 @@ function Analysis() {
   const stages = [
     "Image Preprocessing",
     "Declaration Region Detection",
-    "PaddleOCR Text Extraction",
-    "Font Height & Vector Lookup",
+    "Text Extraction",
+    "Font Height Calculation",
     "Legal Metrology Validation"
   ];
 
@@ -68,9 +68,9 @@ function Analysis() {
         <StepIndicator currentStep={2} />
 
         <div className="page-heading">
-          <div className="eyebrow">AI ANALYSIS</div>
+          <div className="eyebrow">ANALYSIS</div>
           <h1>Analysing package declarations</h1>
-          <p>PARAKH is processing the image via PaddleOCR and evaluating rules via ChromaDB/Gemini.</p>
+          <p>PARAKH is processing the image and evaluating rules.</p>
         </div>
 
         <div className="analysis-layout">

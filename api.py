@@ -71,7 +71,10 @@ async def analyze_label(file: UploadFile = File(...)):
     except Exception as e:
         import traceback
         traceback.print_exc()
-        raise e
+        # Catch Gemini API overload errors
+        if "503 UNAVAILABLE" in str(e) or "high demand" in str(e):
+            raise HTTPException(status_code=503, detail="The AI model is currently experiencing high demand. Please try again in a few moments.")
+        raise HTTPException(status_code=500, detail=str(e))
     finally:
         if os.path.exists(temp_path):
             os.remove(temp_path)

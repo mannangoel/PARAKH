@@ -21,14 +21,14 @@ function Home() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-content">
-          <div className="eyebrow">PACKAGE COMPLIANCE SYSTEM</div>
+          <div className="eyebrow">COMPLIANCE SYSTEM</div>
           <h1>
             Making package
             <br />
             <span>compliance simpler.</span>
           </h1>
           <p>
-            PARAKH is an intelligent inspection system designed to analyse packaged commodities,
+            PARAKH is a direct inspection system designed to analyse packaged commodities,
             detect mandatory declarations, and assist with Legal Metrology compliance checks.
           </p>
 
