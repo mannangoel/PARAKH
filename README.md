@@ -31,7 +31,7 @@ Ensure you have Python 3.10+ installed.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/PARAKH.git
+git clone https://github.com/mannangoel/PARAKH.git
 cd PARAKH
 
 # Create and activate virtual environment
